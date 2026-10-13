@@ -43,7 +43,7 @@ export function SimulationPanel({ dataset, closures, toggleClosure, setClosures,
         </span>
         <div>
           <h2>Try a disruption</h2>
-          <p>Hypothetical closures, immediate impact.</p>
+          <p>Close an example road and see which routes change.</p>
         </div>
       </div>
       <div className="scenario-presets">
@@ -66,10 +66,10 @@ export function SimulationPanel({ dataset, closures, toggleClosure, setClosures,
         ))}
       </div>
       <div className="simulation-subhead">
-        <h3>Scenario incidents</h3>
+        <h3>Example road closures</h3>
         <span>{closures.length} closures</span>
       </div>
-      <p className="simulation-hint">Activate a scenario to remove its road connection.</p>
+      <p className="simulation-hint">Switch on a closure below, then return to Plan a route.</p>
       <div className="incident-list">
         {dataset.incidents.map((incident) => {
           const active = closures.includes(incident.edgeId);
@@ -97,7 +97,7 @@ export function SimulationPanel({ dataset, closures, toggleClosure, setClosures,
       </div>
       <details className="all-roads">
         <summary>
-          All network connections <ChevronDown size={14} />
+          Choose any demo road <ChevronDown size={14} />
         </summary>
         <div>
           {dataset.edges.map((edge) => (
@@ -134,8 +134,8 @@ export function SimulationPanel({ dataset, closures, toggleClosure, setClosures,
       <div className="assumptions">
         <GitFork size={16} />
         <p>
-          Roads are bidirectional. A closure removes one whole connection. Flood shading is
-          illustrative and does not automatically close roads.
+          Closing a road blocks both directions in this demo. Blue flood shading is only an example;
+          it does not close any roads by itself.
         </p>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 :root {
   --ink: #253731;
-  --muted: #74817c;
+  --muted: #57665f;
   --purple: #6354cf;
   --purple-soft: #f0edfd;
   --border: #e3e8e3;
@@ -1911,4 +1911,48 @@ button:hover {
 }
 .panel-tabs button:last-child {
   flex: 0.65;
+}
+/* Plain-language route handoff and readable first-use guidance. */
+.maps-handoff {
+  margin: 18px 0;
+}
+.maps-button {
+  width: 100%;
+  justify-content: center;
+  min-height: 44px;
+}
+.maps-handoff p {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.route-explanation > summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 36px;
+}
+.planner-intro .region-label,
+.workspace-kicker {
+  text-transform: none;
+  letter-spacing: normal;
+}
+.planner-intro p {
+  font-size: 14px;
+}
+.route-comparison {
+  box-shadow: none;
+}
+@media (max-width: 700px) {
+  .planner-intro {
+    display: block;
+  }
+  .planner-intro h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  .planner-intro p {
+    font-size: 14px;
+    max-width: 48ch;
+  }
 }

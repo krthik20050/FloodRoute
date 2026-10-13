@@ -119,17 +119,17 @@ export function Workspace() {
         <nav className="main-nav" aria-label="Main navigation">
           <button className={tab !== 'data' ? 'active' : ''} onClick={() => setTab('plan')}>
             <MapPinned size={17} />
-            Map workspace
+            Route planner
           </button>
           <button className={tab === 'data' ? 'active' : ''} onClick={() => setTab('data')}>
             <Layers size={17} />
-            Data & sources
+            About the data
           </button>
         </nav>
         <div className="top-actions">
           <span className="demo-badge">
             <Beaker size={14} />
-            Simulation mode
+            Demo only
           </span>
           <button
             className="help-button"
@@ -143,11 +143,11 @@ export function Workspace() {
       <div className="safety-banner">
         <ShieldCheck size={16} />
         <span>
-          <strong>A planning prototype.</strong> Scenarios use illustrative data. Follow current
-          official emergency instructions.
+          <strong>Demo only, not live flood information.</strong> Roads and destinations are
+          examples. Follow official advice before travelling.
         </span>
         <a href="https://sdma.kerala.gov.in/" target="_blank" rel="noreferrer">
-          KSDMA <ExternalLink size={12} />
+          Official advice <ExternalLink size={12} />
         </a>
       </div>
       <main className="main-workspace">
@@ -157,13 +157,13 @@ export function Workspace() {
               <span /> Kerala, India
             </span>
             <h1>
-              Every connection
+              See how road closures
               <br />
-              matters.
+              change a journey.
             </h1>
             <p>
-              Explore the routes that keep
-              <br className="desktop-break" /> communities connected.
+              Choose a starting point and destination. Try closing a road to see whether another
+              route reaches the hospital or shelter in this demo.
             </p>
           </div>
           <div
@@ -258,7 +258,7 @@ export function Workspace() {
               No live flood feed connected.
               <br />
               <button onClick={() => setTab('data')}>
-                Inspect data & assumptions <ChevronRight size={13} />
+                How this demo works <ChevronRight size={13} />
               </button>
             </p>
           </div>
@@ -266,11 +266,11 @@ export function Workspace() {
         <section className="map-workspace" aria-label="Network and accessibility">
           <div className="workspace-toolbar">
             <div>
-              <span className="workspace-kicker">Community accessibility lab</span>
+              <span className="workspace-kicker">Aluva area demo</span>
               <h2>
                 {tab === 'simulate'
-                  ? 'Change the network. See the impact.'
-                  : 'A clearer view of what connects us.'}
+                  ? 'Close a demo road to test a detour.'
+                  : 'Your route on the map'}
               </h2>
             </div>
             <div className="workspace-tools">
@@ -355,11 +355,9 @@ export function Workspace() {
               <span>
                 {closures.length
                   ? `${closures.length} simulated ${closures.length === 1 ? 'closure' : 'closures'}`
-                  : 'Baseline network'}
+                  : 'No demo roads closed'}
                 <small>
-                  {loading
-                    ? 'Calculating accessibility…'
-                    : 'Click a road or use the simulation controls'}
+                  {loading ? 'Checking demo routes…' : 'Click a road to close or reopen it'}
                 </small>
               </span>
               {closures.length > 0 && (
@@ -379,12 +377,12 @@ export function Workspace() {
                 <GitFork size={20} />
               </span>
               <div>
-                <h2 id="accessibility-heading">Access to essentials</h2>
+                <h2 id="accessibility-heading">Hospitals, shelters & supplies</h2>
                 <p>From {dataset?.nodes.find((n) => n.id === origin)?.name ?? 'your origin'}</p>
               </div>
               <span className="access-count">
                 {loading ? '…' : `${reachable}/${total}`}
-                <small>reachable</small>
+                <small>connected in demo</small>
               </span>
             </div>
             <div className="facility-list">
@@ -409,13 +407,13 @@ export function Workspace() {
               <div className="connectivity-note">
                 <span>
                   <Activity size={14} />
-                  {analysis.components} network{' '}
-                  {analysis.components === 1 ? 'component' : 'components'}
+                  {analysis.components} separate road{' '}
+                  {analysis.components === 1 ? 'group' : 'groups'}
                 </span>
                 <span className={isolated ? 'text-warning' : ''}>
                   {isolated
-                    ? `${isolated} settlements disconnected from origin`
-                    : 'All configured settlements connected to origin'}
+                    ? `${isolated} demo communities cut off from your start`
+                    : 'All demo communities have a route from your start'}
                 </span>
               </div>
             )}
@@ -430,18 +428,15 @@ export function Workspace() {
           <span className="brand-mark">
             <Waves size={24} />
           </span>
-          <h2>
-            Understand the impact
-            <br />
-            of a broken connection.
-          </h2>
+          <h2>What does FloodRoute do?</h2>
           <p>
             FloodRoute explores how road and bridge closures affect access to hospitals, shelters
             and relief points.
           </p>
           <p>
-            This MVP uses a small, fictional network near Aluva. Facilities, road geometry and flood
-            extents are illustrative. A connected route does not establish travel safety.
+            This is a fictional example near Aluva. The roads, hospitals, shelters and flood shading
+            are not verified real-world information. Use it to try out road closures, not to plan
+            emergency travel.
           </p>
           <button
             className="primary-button"
@@ -450,7 +445,7 @@ export function Workspace() {
               setTab('simulate');
             }}
           >
-            Open simulation lab <ArrowRight size={16} />
+            Try closing a road <ArrowRight size={16} />
           </button>
         </aside>
       )}
@@ -488,7 +483,7 @@ function FacilityItem({
             ? 'Connected in scenario'
             : lost
               ? 'Access lost in this scenario'
-              : 'Unreachable from origin'}
+              : 'No demo route from your start'}
         </small>
       </span>
       {reachable ? <Check size={15} /> : <TriangleAlert size={15} />}

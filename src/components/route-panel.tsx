@@ -6,6 +6,7 @@ import {
   ChevronRight,
   CircleDot,
   Flag,
+  ExternalLink,
   Info,
   LoaderCircle,
   Navigation,
@@ -41,6 +42,17 @@ export function RoutePanel({
   onSimulate,
 }: Props) {
   const locations = dataset.nodes.filter((n) => n.kind !== 'junction');
+  const start = locations.find((node) => node.id === origin);
+  const end = locations.find((node) => node.id === destination);
+  const mapsURL =
+    start && end
+      ? `https://www.google.com/maps/dir/?${new URLSearchParams({
+          api: '1',
+          origin: `${start.lat},${start.lng}`,
+          destination: `${end.lat},${end.lng}`,
+          travelmode: 'driving',
+        })}`
+      : null;
   const changed =
     analysis?.route &&
     analysis.baseline &&
@@ -104,12 +116,12 @@ export function RoutePanel({
         </div>
         <div className="transport-note">
           <Navigation size={14} />
-          <span>Road network connectivity</span>
+          <span>Example places near Aluva</span>
           <span className="small-tag">Demo</span>
         </div>
         <button className="primary-button" type="submit" disabled={loading}>
           {loading ? <LoaderCircle size={17} className="spin" /> : <RouteIcon size={17} />}{' '}
-          {loading ? 'Calculating…' : 'Compare routes'}
+          {loading ? 'Calculating…' : 'Check demo route'}
           <ArrowRight size={17} />
         </button>
       </form>
@@ -147,22 +159,22 @@ export function RoutePanel({
                   <p>
                     {analysis.route
                       ? changed
-                        ? 'An alternative connection remains.'
-                        : 'Connected in this scenario.'
-                      : 'Closures disconnect this destination.'}
+                        ? 'A detour is available in this demo.'
+                        : 'The demo roads connect these places.'
+                      : 'A closed demo road blocks this destination.'}
                   </p>
                 </div>
               </div>
               {analysis.route && (
                 <div className="route-comparison">
                   <div>
-                    <span>{changed ? 'Alternative path' : 'Baseline path'}</span>
+                    <span>{changed ? 'Demo detour' : 'Demo distance'}</span>
                     <strong>
                       {analysis.route.weight.toFixed(1)}
                       <small> scenario km</small>
                     </strong>
                   </div>
-                  {analysis.baseline && (
+                  {changed && analysis.baseline && (
                     <div className="baseline-value">
                       <span>Before closures</span>
                       <strong>
@@ -181,12 +193,30 @@ export function RoutePanel({
               )}
               {!analysis.route && (
                 <p className="unreachable-help">
-                  Try a different destination or remove a closure in the simulation lab. This
-                  prototype cannot recommend emergency travel.
+                  Choose another destination or reopen a road in the Simulate tab. This demo cannot
+                  tell you whether a real journey is safe.
                 </p>
               )}
-              <div className="route-explanation">
-                <h3>Why this result?</h3>
+              {mapsURL && origin !== destination && (
+                <div className="maps-handoff">
+                  <a
+                    className="secondary-button maps-button"
+                    href={mapsURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-describedby="maps-disclaimer"
+                  >
+                    <ExternalLink size={17} /> Open in Google Maps
+                  </a>
+                  <p id="maps-disclaimer">
+                    Opens the selected demo coordinates, not a verified hospital or shelter. Google
+                    Maps calculates its own directions; simulated closures are not included. Confirm
+                    the real destination before travelling.
+                  </p>
+                </div>
+              )}
+              <details className="route-explanation">
+                <summary>How this demo route was calculated</summary>
                 {closures.length > 0 && (
                   <p>
                     {closures.length} simulated road{' '}
@@ -209,12 +239,12 @@ export function RoutePanel({
                     </ol>
                   </details>
                 )}
-              </div>
+              </details>
               <div className="uncertainty-note">
                 <Info size={15} />
                 <p>
-                  Connectivity is not travel safety. Distances are fixture weights, not measured
-                  road lengths. Travel time is unavailable.
+                  A route on this map does not mean the road is safe. Distances are made-up demo
+                  values. Check official advice before travelling.
                 </p>
               </div>
             </>

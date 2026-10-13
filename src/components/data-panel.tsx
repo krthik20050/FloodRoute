@@ -26,17 +26,17 @@ export function DataPanel({ dataset }: { dataset: Dataset }) {
         </span>
         <div>
           <h2>Know your data</h2>
-          <p>Origin, freshness and limitations.</p>
+          <p>What is real, and what is an example.</p>
         </div>
       </div>
       <div className="data-source-block">
         <span className="small-tag">
-          <Beaker size={12} /> Demo fixture
+          <Beaker size={12} /> Example data
         </span>
         <h3>{dataset.provenance.source}</h3>
         <p>{dataset.provenance.description}</p>
         <dl>
-          <dt>Fixture timestamp</dt>
+          <dt>Example created</dt>
           <dd>
             {new Date(dataset.provenance.generatedAt).toLocaleString('en-IN', {
               timeZone: 'Asia/Kolkata',
@@ -48,16 +48,16 @@ export function DataPanel({ dataset }: { dataset: Dataset }) {
             })}{' '}
             IST
           </dd>
-          <dt>Live freshness</dt>
+          <dt>Live updates</dt>
           <dd>Not applicable: synthetic data</dd>
           <dt>Coverage</dt>
           <dd>
-            {dataset.nodes.length} nodes, {dataset.edges.length} illustrative roads
+            {dataset.nodes.length} places, {dataset.edges.length} illustrative roads
           </dd>
-          <dt>Facility operation</dt>
+          <dt>Hospitals and shelters</dt>
           <dd>Unverified, fictional locations</dd>
           <dt>Flood shading</dt>
-          <dd>Illustrative polygon, not a hazard model</dd>
+          <dd>Example shading, not an actual flood warning</dd>
         </dl>
       </div>
       <h3 className="source-links-heading">Official reference sources</h3>
@@ -81,7 +81,7 @@ export function DataPanel({ dataset }: { dataset: Dataset }) {
         </p>
       </div>
       <details className="all-roads">
-        <summary>Scenario report provenance</summary>
+        <summary>Details of the example road closures</summary>
         <div>
           {dataset.incidents.map((incident) => (
             <article className="provenance-row" key={incident.id}>

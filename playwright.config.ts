@@ -8,8 +8,8 @@ export default defineConfig({
     process.env.PLAYWRIGHT_STATIC_DEMO === '1' ? 'test-results/pages' : 'test-results/server',
   testMatch:
     process.env.PLAYWRIGHT_STATIC_DEMO === '1'
-      ? 'pages.spec.ts'
-      : ['workspace.spec.ts', 'usability.spec.ts'],
+      ? ['pages.spec.ts', 'maps-android.spec.ts']
+      : ['workspace.spec.ts', 'usability.spec.ts', 'maps-android.spec.ts'],
   timeout: 30000,
   use: { baseURL, trace: 'retain-on-failure' },
   projects: [

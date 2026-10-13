@@ -1,4 +1,6 @@
 'use client';
+import { useState, useSyncExternalStore } from 'react';
+import { mapsLinks } from '@/lib/maps-links';
 import {
   ArrowDownUp,
   ArrowRight,
@@ -28,6 +30,10 @@ interface Props {
   onRetry: () => void;
   onSimulate: () => void;
 }
+const subscribeToPlatform = () => () => {};
+const androidChrome = () =>
+  /Android/i.test(navigator.userAgent) && /Chrome\//i.test(navigator.userAgent);
+const serverPlatform = () => false;
 export function RoutePanel({
   dataset,
   analysis,
@@ -44,15 +50,18 @@ export function RoutePanel({
   const locations = dataset.nodes.filter((n) => n.kind !== 'junction');
   const start = locations.find((node) => node.id === origin);
   const end = locations.find((node) => node.id === destination);
-  const mapsURL =
-    start && end
-      ? `https://www.google.com/maps/dir/?${new URLSearchParams({
-          api: '1',
-          origin: `${start.lat},${start.lng}`,
-          destination: `${end.lat},${end.lng}`,
-          travelmode: 'driving',
-        })}`
-      : null;
+  const links = start && end ? mapsLinks(start, end) : null;
+  const isAndroidChrome = useSyncExternalStore(subscribeToPlatform, androidChrome, serverPlatform);
+  const [copyMessage, setCopyMessage] = useState('');
+  async function copyMapsLink() {
+    if (!links) return;
+    try {
+      await navigator.clipboard.writeText(links.web);
+      setCopyMessage('Maps link copied. Paste it into Google Maps or another browser.');
+    } catch {
+      setCopyMessage('Copy unavailable. Press and hold the browser link to copy it.');
+    }
+  }
   const changed =
     analysis?.route &&
     analysis.baseline &&
@@ -197,17 +206,34 @@ export function RoutePanel({
                   tell you whether a real journey is safe.
                 </p>
               )}
-              {mapsURL && origin !== destination && (
+              {links && origin !== destination && (
                 <div className="maps-handoff">
                   <a
                     className="secondary-button maps-button"
-                    href={mapsURL}
-                    target="_blank"
+                    href={isAndroidChrome ? links.android : links.web}
+                    target={isAndroidChrome ? undefined : '_blank'}
                     rel="noopener noreferrer"
                     aria-describedby="maps-disclaimer"
                   >
                     <ExternalLink size={17} /> Open in Google Maps
                   </a>
+                  <div className="maps-alternatives">
+                    {isAndroidChrome && (
+                      <a href={links.web} target="_blank" rel="noopener noreferrer">
+                        Open Maps in browser
+                      </a>
+                    )}
+                    <button type="button" onClick={copyMapsLink}>
+                      Copy Maps link
+                    </button>
+                  </div>
+                  {copyMessage && <p role="status">{copyMessage}</p>}
+                  {isAndroidChrome && (
+                    <p>
+                      Opens the Google Maps app if installed. If the browser map is blank, copy the
+                      link and open it in the Maps app.
+                    </p>
+                  )}
                   <p id="maps-disclaimer">
                     Opens the selected demo coordinates, not a verified hospital or shelter. Google
                     Maps calculates its own directions; simulated closures are not included. Confirm

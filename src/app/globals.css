@@ -1956,3 +1956,21 @@ button:hover {
     max-width: 48ch;
   }
 }
+.maps-alternatives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.maps-alternatives a,
+.maps-alternatives button {
+  background: transparent;
+  color: var(--purple);
+  font-size: 13px;
+  padding: 8px 0;
+  text-decoration: underline;
+  min-height: 44px;
+}
+.maps-handoff p:empty {
+  display: none;
+}

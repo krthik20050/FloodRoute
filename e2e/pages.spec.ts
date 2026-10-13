@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect as baseExpect, test, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 
 test.skip(
@@ -6,6 +6,8 @@ test.skip(
   'Static export validation is explicitly enabled.',
 );
 const staticURL = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3002/FloodRoute/';
+const expect = baseExpect.configure({ timeout: staticURL.startsWith('https:') ? 20000 : 5000 });
+test.setTimeout(staticURL.startsWith('https:') ? 90000 : 30000);
 const observed = new WeakMap<Page, { errors: string[]; api: string[]; brokenAssets: string[] }>();
 
 test.beforeEach(async ({ page }) => {

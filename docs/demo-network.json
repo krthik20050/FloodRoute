@@ -1,0 +1,245 @@
+{
+  "nodes": [
+    {
+      "id": "aluva",
+      "name": "Aluva town · demo",
+      "lat": 10.1076,
+      "lng": 76.3516,
+      "kind": "settlement"
+    },
+    {
+      "id": "east",
+      "name": "East bank junction",
+      "lat": 10.119,
+      "lng": 76.369,
+      "kind": "junction"
+    },
+    {
+      "id": "west",
+      "name": "West bank junction",
+      "lat": 10.124,
+      "lng": 76.341,
+      "kind": "junction"
+    },
+    {
+      "id": "north",
+      "name": "Northern bypass",
+      "lat": 10.145,
+      "lng": 76.358,
+      "kind": "junction"
+    },
+    {
+      "id": "village",
+      "name": "Riverbank settlement · demo",
+      "lat": 10.138,
+      "lng": 76.38,
+      "kind": "settlement"
+    },
+    {
+      "id": "hospital",
+      "name": "Demo district hospital",
+      "lat": 10.111,
+      "lng": 76.387,
+      "kind": "hospital"
+    },
+    {
+      "id": "shelter",
+      "name": "Demo school shelter",
+      "lat": 10.141,
+      "lng": 76.333,
+      "kind": "shelter"
+    },
+    {
+      "id": "relief",
+      "name": "Demo relief depot",
+      "lat": 10.096,
+      "lng": 76.333,
+      "kind": "relief"
+    }
+  ],
+  "edges": [
+    {
+      "id": "bridge-east",
+      "from": "aluva",
+      "to": "east",
+      "name": "East bridge",
+      "coordinates": [
+        [
+          10.1076,
+          76.3516
+        ],
+        [
+          10.119,
+          76.369
+        ]
+      ],
+      "weight": 2.4
+    },
+    {
+      "id": "west-road",
+      "from": "aluva",
+      "to": "west",
+      "name": "West bank road",
+      "coordinates": [
+        [
+          10.1076,
+          76.3516
+        ],
+        [
+          10.124,
+          76.341
+        ]
+      ],
+      "weight": 2.8
+    },
+    {
+      "id": "north-west",
+      "from": "west",
+      "to": "north",
+      "name": "Northern approach",
+      "coordinates": [
+        [
+          10.124,
+          76.341
+        ],
+        [
+          10.145,
+          76.358
+        ]
+      ],
+      "weight": 3.6
+    },
+    {
+      "id": "north-east",
+      "from": "north",
+      "to": "east",
+      "name": "Bypass bridge",
+      "coordinates": [
+        [
+          10.145,
+          76.358
+        ],
+        [
+          10.119,
+          76.369
+        ]
+      ],
+      "weight": 3.8
+    },
+    {
+      "id": "hospital-access",
+      "from": "east",
+      "to": "hospital",
+      "name": "Hospital access road",
+      "coordinates": [
+        [
+          10.119,
+          76.369
+        ],
+        [
+          10.111,
+          76.387
+        ]
+      ],
+      "weight": 2.2
+    },
+    {
+      "id": "village-access",
+      "from": "east",
+      "to": "village",
+      "name": "Riverbank access",
+      "coordinates": [
+        [
+          10.119,
+          76.369
+        ],
+        [
+          10.138,
+          76.38
+        ]
+      ],
+      "weight": 2.7
+    },
+    {
+      "id": "shelter-access",
+      "from": "west",
+      "to": "shelter",
+      "name": "School access road",
+      "coordinates": [
+        [
+          10.124,
+          76.341
+        ],
+        [
+          10.141,
+          76.333
+        ]
+      ],
+      "weight": 2.1
+    },
+    {
+      "id": "relief-access",
+      "from": "aluva",
+      "to": "relief",
+      "name": "Depot access road",
+      "coordinates": [
+        [
+          10.1076,
+          76.3516
+        ],
+        [
+          10.096,
+          76.333
+        ]
+      ],
+      "weight": 2.6
+    }
+  ],
+  "incidents": [
+    {
+      "id": "incident-bridge",
+      "edgeId": "bridge-east",
+      "title": "Bridge inundation scenario",
+      "description": "Simulated high water makes this bridge unavailable. Toggle the closure to compare connectivity.",
+      "severity": "high",
+      "source": "FloodRoute scenario fixture",
+      "observedAt": "2026-10-13T08:00:00Z",
+      "verification": "simulated",
+      "status": "active",
+      "lat": 10.1133,
+      "lng": 76.3603
+    },
+    {
+      "id": "incident-hospital",
+      "edgeId": "hospital-access",
+      "title": "Hospital approach scenario",
+      "description": "Simulated access-road closure isolates the demo hospital.",
+      "severity": "high",
+      "source": "FloodRoute scenario fixture",
+      "observedAt": "2026-10-13T08:00:00Z",
+      "verification": "simulated",
+      "status": "active",
+      "lat": 10.115,
+      "lng": 76.378
+    },
+    {
+      "id": "incident-shelter",
+      "edgeId": "shelter-access",
+      "title": "Shelter approach scenario",
+      "description": "Simulated access-road closure isolates the demo shelter.",
+      "severity": "moderate",
+      "source": "FloodRoute scenario fixture",
+      "observedAt": "2026-10-13T08:00:00Z",
+      "verification": "simulated",
+      "status": "active",
+      "lat": 10.1325,
+      "lng": 76.337
+    }
+  ],
+  "provenance": {
+    "mode": "demo",
+    "source": "Synthetic Aluva / Periyar teaching network",
+    "generatedAt": "2026-10-13T08:00:00Z",
+    "description": "Illustrative coordinates near Aluva. All roads, facilities and reports are fictional; no live flood observations or verified safe routes."
+  }
+}

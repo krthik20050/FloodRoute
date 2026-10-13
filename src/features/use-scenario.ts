@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import type { Dataset, Analysis } from '@/lib/domain';
+import { loadNetwork, calculateScenario } from './scenario-client';
 const STORAGE_KEY = 'floodroute-scenario-v1';
 export function useScenario() {
   const [dataset, setDataset] = useState<Dataset | null>(null);
@@ -18,11 +19,9 @@ export function useScenario() {
     const controller = new AbortController();
     async function load() {
       try {
-        const response = await fetch('/api/network', {
-          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
-        });
-        if (!response.ok) throw new Error('The scenario network could not load.');
-        const network: Dataset = await response.json();
+        const network = await loadNetwork(
+          AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
+        );
         setDataset(network);
         setNetworkError('');
         if (!restored.current) {
@@ -65,18 +64,11 @@ export function useScenario() {
       setError('');
       setAnalysis(null);
       try {
-        const response = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ origin, destination, closures }),
-          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
-        });
-        const result = await response.json();
-        if (!response.ok)
-          throw new Error(
-            typeof result.error === 'string' ? result.error : 'Route analysis failed.',
-          );
-        if (!controller.signal.aborted) setAnalysis(result as Analysis);
+        const result = await calculateScenario(
+          { origin, destination, closures },
+          AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
+        );
+        if (!controller.signal.aborted) setAnalysis(result);
       } catch (e) {
         if (!controller.signal.aborted)
           setError(e instanceof Error ? e.message : 'Route analysis failed. Try again.');

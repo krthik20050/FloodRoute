@@ -1,6 +1,9 @@
 node_modules/
 .next/
 .next-production/
+.next-*/
+.pages-build/
+.pages-site/
 .env*
 !.env.example
 test-results/

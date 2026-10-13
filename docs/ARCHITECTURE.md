@@ -41,4 +41,8 @@ Target WCAG AA; root/QA owns keyboard, viewport and state checks. Aspirational m
 
 ## Operations
 
+### GitHub Pages mode
+
+The user subsequently authorized GitHub Pages hosting. Its static-only runtime uses the shared `src/lib/analyze.ts` graph algorithm and validated demo fixtures inside a cancellable browser Web Worker; calculation remains outside map rendering and the UI main thread. The local/server version retains API execution through server re-exports. `build:pages` creates an isolated API-free export with the repository base path. The source remains private while the generated demo website is public. See GITHUB_PAGES.md for deployment and verification. This changes hosting, not the data's simulation/verification status.
+
 Node 22, npm lockfile. `npm ci`, `npm run dev`. Static fixtures require no .env. `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`, `npm run test:e2e`. CI file performs checks without deployment. No cloud service, GitHub remote or external publishing is required.

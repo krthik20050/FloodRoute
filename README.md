@@ -1,5 +1,7 @@
 # FloodRoute
 
+Hosted simulation: [GitHub Pages](https://krthik20050.github.io/FloodRoute/). The static hosting build uses the same graph algorithm in a browser worker; the local app retains server APIs. See [Pages setup](docs/GITHUB_PAGES.md).
+
 A local-first community accessibility lab for Kerala. A working map workspace demonstrates how hypothetical road and bridge closures change routes and access to configured hospitals, shelters and relief points.
 
 **Simulation prototype only.** All road geometry, facilities and incident fixtures are illustrative. No live flood data or operational destination list is connected. A path is graph connectivity, not verified travel safety. Follow current official instructions.

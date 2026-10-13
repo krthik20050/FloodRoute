@@ -1,6 +1,9 @@
 node_modules
 .next
 .next-production
+.next-*
+.pages-build
+.pages-site
 package-lock.json
 test-results
 playwright-report

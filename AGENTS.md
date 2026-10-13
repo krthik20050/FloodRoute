@@ -12,7 +12,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Read docs/ARCHITECTURE.md and docs/SAFETY_AND_LIMITATIONS.md before changing routing or data presentation.
 - The current provider is synthetic. Never label fixture observations, schematic edges or fictional facilities as verified/live/operational. Connectivity never establishes travel safety.
-- Preserve server-side graph calculations, per-request closure isolation, coordinate order (latitude, longitude), provenance and failure states.
+- Preserve graph correctness, per-request closure isolation, coordinate order (latitude, longitude), provenance and failure states. Local Next.js uses server calculations; GitHub Pages uses the same shared algorithm inside a cancellable browser worker because Pages has no server runtime.
 - Run typecheck, lint, unit/API tests and the relevant browser journey after meaningful changes. Use a separate production output directory while dev is running.
 - Keep secrets out of source, fixtures, exports and logs. No privileged writes are currently exposed; the Supabase migration is a draft, not a connected database.
-- Do not push or publish this project without direct user authorization. Current task delivery is localhost only.
+- Do not push or publish this project without direct user authorization. The user authorized GitHub push and GitHub Pages hosting on 13 October 2026. Source stays private; the generated demo site is public.
